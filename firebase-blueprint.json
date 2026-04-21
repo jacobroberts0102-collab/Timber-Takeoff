@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the application",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "avatarUrl": { "type": "string", "format": "uri" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "HistoryItem": {
+      "title": "HistoryItem",
+      "description": "A past takeoff job",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "fileName": { "type": "string" },
+        "itemCount": { "type": "number" },
+        "data": { "type": "array" },
+        "metadata": { "type": "object" },
+        "jobNotes": { "type": "string" }
+      },
+      "required": ["id", "userId", "timestamp", "fileName", "data"]
+    },
+    "CatalogProduct": {
+      "title": "CatalogProduct",
+      "description": "A product in the timber catalog",
+      "type": "object",
+      "properties": {
+        "itemNo": { "type": "string" },
+        "description": { "type": "string" },
+        "thickness": { "type": "number" },
+        "width": { "type": "number" },
+        "grade": { "type": "string" },
+        "length": { "type": "number" },
+        "price": { "type": "number" },
+        "dimsKey": { "type": "string" }
+      },
+      "required": ["itemNo", "description"]
+    },
+    "MemoryItem": {
+      "title": "MemoryItem",
+      "description": "A learned mapping between takeoff description and catalog item",
+      "type": "object",
+      "properties": {
+        "lookupKey": { "type": "string" },
+        "displayName": { "type": "string" },
+        "dimensions": { "type": "string" },
+        "itemNo": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["lookupKey", "itemNo"]
+    },
+    "Branding": {
+      "title": "Branding",
+      "description": "Global application branding settings",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string" },
+        "logoUrl": { "type": "string", "format": "uri" }
+      },
+      "required": ["companyName"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile data"
+    },
+    "/history/{historyId}": {
+      "schema": "HistoryItem",
+      "description": "Past takeoff jobs"
+    },
+    "/catalog/{itemNo}": {
+      "schema": "CatalogProduct",
+      "description": "Timber catalog items"
+    },
+    "/learnedMappings/{lookupKey}": {
+      "schema": "MemoryItem",
+      "description": "Learned mappings"
+    },
+    "/branding/global": {
+      "schema": "Branding",
+      "description": "Global branding settings"
+    }
+  }
+}
